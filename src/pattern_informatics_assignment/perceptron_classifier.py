@@ -18,7 +18,7 @@ class PerceptronClassifier(Classifier2D):
         raise NotImplementedError
 
     def train(self, patterns: np.ndarray, labels: np.ndarray, epochs: int) -> None:
-        print("Train started")
+        print("Train")
         for epoch in range(epochs):
             print(f"Epoch {epoch + 1}")
             correct = 0

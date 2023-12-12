@@ -33,3 +33,11 @@ def plot_decision_boundary(
     plt.xlabel("x_1", fontsize=16)
     plt.ylabel("x_2", fontsize=16)
     plt.show()
+
+
+def plot_line(x: np.ndarray, y: np.ndarray, xlabel: str = "", ylabel: str = ""):
+    plt.plot(x, y)
+    plt.grid(axis="x")
+    plt.xlabel(xlabel, fontsize=16)
+    plt.ylabel(ylabel, fontsize=16)
+    plt.show()

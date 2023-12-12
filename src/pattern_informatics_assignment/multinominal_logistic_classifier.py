@@ -26,7 +26,7 @@ class MultinominalLogisticClassifier:
         self.confusion_matrix.evaluate(
             np.argmax(self.predict(patterns), axis=1), labels
         )
-        with np.set_printoptions(precision=3):
+        with np.printoptions(precision=3):
             print(f"Recall: {self.confusion_matrix.recall}")
             print(f"Precision: {self.confusion_matrix.precision}")
             print(f"F1: {self.confusion_matrix.f1}")

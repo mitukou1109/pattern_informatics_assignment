@@ -22,6 +22,8 @@ KNN_CIRCLES = 5
 KNN_MOONS = 6
 KNN_MULTICLASS = 7
 
+np.random.seed(13)
+
 if len(sys.argv) > 1:
     target = int(sys.argv[1])
 else:
@@ -50,7 +52,7 @@ if target <= PERCEPTRON_CUBIC:
         epochs = 100
     elif target == PERCEPTRON_CUBIC:
         X, y = make_moons(n_samples=200, noise=0.3)
-        classifier = CubicPerceptronClassifier(learning_rate=0.002)
+        classifier = CubicPerceptronClassifier(learning_rate=0.2)
         epochs = 100
     classifier.train(X, y, epochs)
     util.plot_decision_boundary(classifier, X, y)

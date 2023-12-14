@@ -24,6 +24,71 @@
 \maketitle
 
 \section{課題1}
-パーセプトロンを用いて線形・二次・三次の識別関数を学習させ得られた決定境界を図\ref{fig:decision_boundary}に示す．いずれもクラス間を適当に分離していることがわかる．
+線形・二次・三次の識別関数を表\ref{table:1_parameter}に示すパラメータを用いて学習させ，得られた決定境界を図\ref{fig:1_decision_boundary}に示す．いずれもクラス間を適当に分離していることがわかる．
+
+\begin{table}[htbp]
+  \centering
+  \caption{学習に用いたパラメータ}
+  \label{table:1_parameter}
+  \begin{tabular}{cccc}
+    \toprule
+    項目            & 線形    & 二次    & 三次    \\
+    \midrule
+    学習係数          & 0.001 & 0.001 & 0.002 \\
+    エポック数         & 100   & 100   & 100   \\
+    ガウシアンノイズの標準偏差 & -     & 0.1   & 0.3   \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{figure}[htbp]
+  \centering
+  \begin{minipage}[b]{0.325\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{img/1_decision_boundary_linear.png}
+    \subcaption{線形識別関数}
+    \label{fig:1_decision_boundary_linear}
+  \end{minipage}
+  \begin{minipage}[b]{0.325\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{img/1_decision_boundary_quadratic.png}
+    \subcaption{二次識別関数}
+    \label{fig:1_decision_boundary_quadratic}
+  \end{minipage}
+  \begin{minipage}[b]{0.325\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{img/1_decision_boundary_cubic.png}
+    \subcaption{三次識別関数}
+    \label{fig:1_decision_boundary_cubic}
+  \end{minipage}
+  \caption{パーセプトロンで学習した決定境界}
+  \label{fig:1_decision_boundary}
+\end{figure}
+
+次に，学習係数を0.2，0.002，0.0002とした場合の決定境界を図\ref{fig:1_decision_boundary_learning_rate}に示す．
+
+\begin{figure}[htbp]
+  \centering
+  \begin{minipage}[b]{0.325\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{img/1_decision_boundary_0_2.png}
+    \subcaption{0.2の場合}
+    \label{fig:1_decision_boundary_0_2}
+  \end{minipage}
+  \begin{minipage}[b]{0.325\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{img/1_decision_boundary_cubic.png}
+    \subcaption{0.002の場合}
+    \label{fig:1_decision_boundary_0_002}
+  \end{minipage}
+  \begin{minipage}[b]{0.325\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{img/1_decision_boundary_0_0002.png}
+    \subcaption{0.0002の場合}
+    \label{fig:1_decision_boundary_0_0002}
+  \end{minipage}
+  \caption{学習係数による決定境界の比較}
+  \label{fig:1_decision_boundary_learning_rate}
+\end{figure}
 
 \end{document}

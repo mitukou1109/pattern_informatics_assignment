@@ -30,8 +30,8 @@ def plot_decision_boundary(
 
     plt.contourf(xx, yy, zz, cmap="Paired")
     plt.scatter(patterns[:, 0], patterns[:, 1], c=labels, cmap="cividis")
-    plt.xlabel("x_1", fontsize=16)
-    plt.ylabel("x_2", fontsize=16)
+    plt.xlabel(r"$x_1$", fontsize=16)
+    plt.ylabel(r"$x_2$", fontsize=16)
     plt.show()
 
 

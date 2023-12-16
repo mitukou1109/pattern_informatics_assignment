@@ -95,14 +95,16 @@ elif target == KNN_MULTICLASS:
     )
     k_max = 32
     ks = np.arange(k_max) + 1
-    accuracy = np.zeros(k_max)
+    train_accuracy = np.zeros(k_max)
+    test_accuracy = np.zeros(k_max)
     for k in ks:
         print(f"k = {k}")
         classifier = KNNClassifier(k=k, n_classes=len(digits.target_names))
-        accuracy[k - 1] = classifier.cross_validation(X_train, y_train, 100)
+        train_accuracy[k - 1] = classifier.cross_validation(X_train, y_train, 100)
         classifier.train(X_train, y_train)
-        classifier.test(X_test, y_test)
-    util.plot_line(ks, accuracy, xlabel="k", ylabel="accuracy")
+        test_accuracy[k - 1] = classifier.test(X_test, y_test)
+    util.plot_line(ks, train_accuracy, xlabel=r"$k$", ylabel="accuracy")
+    util.plot_line(ks, test_accuracy, xlabel=r"$k$", ylabel="accuracy")
 
 else:
     raise ValueError("Invalid target")

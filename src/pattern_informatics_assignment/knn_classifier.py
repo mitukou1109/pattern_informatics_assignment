@@ -30,13 +30,14 @@ class KNNClassifier(Classifier2D):
         self.patterns = patterns
         self.labels = labels
 
-    def test(self, patterns: np.ndarray, labels: np.ndarray) -> None:
+    def test(self, patterns: np.ndarray, labels: np.ndarray) -> float:
         self.confusion_matrix.evaluate(self.predict(patterns), labels)
         with np.printoptions(precision=3):
             print(f"Recall: {self.confusion_matrix.recall}")
             print(f"Precision: {self.confusion_matrix.precision}")
             print(f"F1: {self.confusion_matrix.f1}")
             print(f"Accuracy: {self.confusion_matrix.accuracy:.3f}")
+        return self.confusion_matrix.accuracy
 
     def predict(self, patterns: np.ndarray) -> np.ndarray:
         distances = np.linalg.norm(self.patterns[:, np.newaxis, :] - patterns, axis=2)

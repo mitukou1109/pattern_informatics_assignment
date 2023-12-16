@@ -21,7 +21,7 @@ class MultinominalLogisticClassifier:
             self.confusion_matrix.evaluate(np.argmax(pred, axis=1), labels)
             print(f"Accuracy: {self.confusion_matrix.accuracy}")
 
-    def test(self, patterns: np.ndarray, labels: np.ndarray) -> None:
+    def test(self, patterns: np.ndarray, labels: np.ndarray) -> float:
         print("Test")
         self.confusion_matrix.evaluate(
             np.argmax(self.predict(patterns), axis=1), labels
@@ -31,6 +31,7 @@ class MultinominalLogisticClassifier:
             print(f"Precision: {self.confusion_matrix.precision}")
             print(f"F1: {self.confusion_matrix.f1}")
             print(f"Accuracy: {self.confusion_matrix.accuracy:.3f}")
+        return self.confusion_matrix.accuracy
 
     def predict(self, patterns: np.ndarray) -> np.ndarray:
         return np.exp(self.weights.T @ patterns.T).T / np.sum(

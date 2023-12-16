@@ -3,12 +3,17 @@
 \usepackage{bm}
 \usepackage{booktabs}
 \usepackage{caption}
-\usepackage[margin=20truemm]{geometry}
+\usepackage[margin=15truemm]{geometry}
 \usepackage[dvipdfmx]{graphicx}
 \usepackage{multirow}
 \usepackage{url}
 \usepackage[subrefformat=parens]{subcaption}
 \usepackage{wrapfig}
+
+\makeatletter
+\newcommand{\figcap}{\def\@captype{figure}}
+\newcommand{\tabcap}{\def\@captype{table}}
+\makeatother
 
 \renewcommand{\figurename}{Fig. }
 \renewcommand{\tablename}{Table }
@@ -23,39 +28,42 @@
 
 \maketitle
 
-\section{課題1}
-線形・二次・三次の識別関数を表\ref{table:1_parameter}に示すパラメータを用いて学習させ，得られた決定境界を図\ref{fig:1_decision_boundary}に示す．いずれもクラス間を適当に分離していることがわかる．
+\subsection*{課題1}
+
+線形・二次・三次の識別関数を\tablename\ref{table:1_parameter_dataset}に示すパラメータおよびデータセットを用いてパーセプトロンで学習させ，得られた決定境界を\figurename\ref{fig:1_decision_boundary}に示す．いずれもクラス間を適当に分離していることがわかる．
 
 \begin{table}[htbp]
   \centering
-  \caption{学習に用いたパラメータ}
-  \label{table:1_parameter}
+  \caption{学習に用いたパラメータおよびデータセット}
+  \label{table:1_parameter_dataset}
   \begin{tabular}{cccc}
     \toprule
-    項目            & 線形    & 二次    & 三次    \\
+                             & 線形                   & 二次            & 三次          \\
     \midrule
-    学習係数          & 0.001 & 0.001 & 0.002 \\
-    エポック数         & 100   & 100   & 100   \\
-    ガウシアンノイズの標準偏差 & -     & 0.1   & 0.3   \\
+    学習係数                     & 0.001                & 0.001         & 0.002       \\
+    エポック数                    & 100                  & 100           & 100         \\
+    \midrule
+    データセット（sklearn.datasets） & make\_classification & make\_circles & make\_moons \\
+    ガウシアンノイズの標準偏差            & -                    & 0.1           & 0.3         \\
     \bottomrule
   \end{tabular}
 \end{table}
 
 \begin{figure}[htbp]
   \centering
-  \begin{minipage}[b]{0.325\linewidth}
+  \begin{minipage}[b]{0.25\linewidth}
     \centering
     \includegraphics[width=\linewidth]{img/1_decision_boundary_linear.png}
     \subcaption{線形識別関数}
     \label{fig:1_decision_boundary_linear}
   \end{minipage}
-  \begin{minipage}[b]{0.325\linewidth}
+  \begin{minipage}[b]{0.25\linewidth}
     \centering
     \includegraphics[width=\linewidth]{img/1_decision_boundary_quadratic.png}
     \subcaption{二次識別関数}
     \label{fig:1_decision_boundary_quadratic}
   \end{minipage}
-  \begin{minipage}[b]{0.325\linewidth}
+  \begin{minipage}[b]{0.25\linewidth}
     \centering
     \includegraphics[width=\linewidth]{img/1_decision_boundary_cubic.png}
     \subcaption{三次識別関数}
@@ -65,30 +73,187 @@
   \label{fig:1_decision_boundary}
 \end{figure}
 
-次に，学習係数を0.2，0.002，0.0002とした場合の決定境界を図\ref{fig:1_decision_boundary_learning_rate}に示す．
+次に，三次の識別関数の学習において学習係数を0.2，0.002，0.0002，その他のパラメータを\tablename\ref{table:1_parameter_dataset}に示す値とした場合の決定境界を\figurename\ref{fig:1_decision_boundary_learning_rate}に示す．\subref{fig:1_decision_boundary_lr_0_2}では\subref{fig:1_decision_boundary_lr_0_002}に比べてよりデータの分布に沿った決定境界が得られている一方，\subref{fig:1_decision_boundary_lr_0_0002}では学習が十分に進んでおらず，クラス間を正しく分離できていないことがわかる．
 
 \begin{figure}[htbp]
   \centering
-  \begin{minipage}[b]{0.325\linewidth}
+  \begin{minipage}[b]{0.25\linewidth}
     \centering
-    \includegraphics[width=\linewidth]{img/1_decision_boundary_0_2.png}
+    \includegraphics[width=\linewidth]{img/1_decision_boundary_lr_0_2.png}
     \subcaption{0.2の場合}
-    \label{fig:1_decision_boundary_0_2}
+    \label{fig:1_decision_boundary_lr_0_2}
   \end{minipage}
-  \begin{minipage}[b]{0.325\linewidth}
+  \begin{minipage}[b]{0.25\linewidth}
     \centering
     \includegraphics[width=\linewidth]{img/1_decision_boundary_cubic.png}
     \subcaption{0.002の場合}
-    \label{fig:1_decision_boundary_0_002}
+    \label{fig:1_decision_boundary_lr_0_002}
   \end{minipage}
-  \begin{minipage}[b]{0.325\linewidth}
+  \begin{minipage}[b]{0.25\linewidth}
     \centering
-    \includegraphics[width=\linewidth]{img/1_decision_boundary_0_0002.png}
+    \includegraphics[width=\linewidth]{img/1_decision_boundary_lr_0_0002.png}
     \subcaption{0.0002の場合}
-    \label{fig:1_decision_boundary_0_0002}
+    \label{fig:1_decision_boundary_lr_0_0002}
   \end{minipage}
   \caption{学習係数による決定境界の比較}
   \label{fig:1_decision_boundary_learning_rate}
 \end{figure}
+
+さらに，エポック数を10，100，1000，その他のパラメータを\tablename\ref{table:1_parameter_dataset}の値とした場合の決定境界を\figurename\ref{fig:1_decision_boundary_epoch}に示す．\subref{fig:1_decision_boundary_epoch_10}では学習不足のため識別の誤りが多くみられるほか，\subref{fig:1_decision_boundary_epoch_1000}では学習率0.2の場合と同様に決定境界がより明瞭になっていることがわかる．
+
+\begin{figure}[htbp]
+  \centering
+  \begin{minipage}[b]{0.25\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{img/1_decision_boundary_epoch_10.png}
+    \subcaption{10の場合}
+    \label{fig:1_decision_boundary_epoch_10}
+  \end{minipage}
+  \begin{minipage}[b]{0.25\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{img/1_decision_boundary_cubic.png}
+    \subcaption{100の場合}
+    \label{fig:1_decision_boundary_epoch_100}
+  \end{minipage}
+  \begin{minipage}[b]{0.25\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{img/1_decision_boundary_epoch_1000.png}
+    \subcaption{1000の場合}
+    \label{fig:1_decision_boundary_epoch_1000}
+  \end{minipage}
+  \caption{エポック数による決定境界の比較}
+  \label{fig:1_decision_boundary_epoch}
+\end{figure}
+
+最後に，ノイズの標準偏差を0.1，0.3，0.5，その他のパラメータを\tablename\ref{table:1_parameter_dataset}の値とした場合の決定境界を\figurename\ref{fig:1_decision_boundary_noise}に示す．\subref{fig:1_decision_boundary_noise_0_1}ではノイズが少ないためデータを完全に分離できており，19エポックで正解率が100\%に達したが，\subref{fig:1_decision_boundary_noise_0_5}では決定境界の形状がその他と大きく異なっており，正解率は80\%程度と\subref{fig:1_decision_boundary_noise_0_3}の約90\%に比べ低い結果となった．
+
+\begin{figure}[htbp]
+  \centering
+  \begin{minipage}[b]{0.25\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{img/1_decision_boundary_noise_0_1.png}
+    \subcaption{0.1の場合}
+    \label{fig:1_decision_boundary_noise_0_1}
+  \end{minipage}
+  \begin{minipage}[b]{0.25\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{img/1_decision_boundary_cubic.png}
+    \subcaption{0.3の場合}
+    \label{fig:1_decision_boundary_noise_0_3}
+  \end{minipage}
+  \begin{minipage}[b]{0.25\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{img/1_decision_boundary_noise_0_5.png}
+    \subcaption{0.5の場合}
+    \label{fig:1_decision_boundary_noise_0_5}
+  \end{minipage}
+  \caption{ノイズの標準偏差による決定境界の比較}
+  \label{fig:1_decision_boundary_noise}
+\end{figure}
+
+\subsection*{課題2}
+
+\tablename\ref{table:2_parameter_dataset}に示すパラメータおよびデータセットを用いて学習させたロジスティック回帰モデルの性能を\tablename\ref{table:2_performance}に示す．なお，使用したデータセットは手書き数字の画像データであり，各ラベルは0から9までの数字に対応している．
+
+3，8，9の再現率，適合率，F値が他のクラスに比べ低く，特に8の適合率に大きな差がみられることから，この3クラスは8と誤認識されやすいことがわかる．一方で正解率は0.971と高く，全体としては高い性能を示しているといえる．
+
+\begin{table}[htbp]
+  \centering
+  \caption{学習に用いたパラメータおよびデータセット}
+  \label{table:2_parameter_dataset}
+  \begin{tabular}{cc}
+    \toprule
+    学習係数                    & 0.001                           \\
+    エポック数                   & 1000                            \\
+    \midrule
+    \multirow{2}{*}{データセット} & sklearn.datasets.digit\_dataset \\
+                            & （学習データ80\%，テストデータ20\%）          \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+  \centering
+  \caption{学習したモデルの性能}
+  \label{table:2_performance}
+  \begin{tabular}{ccccccccccc}
+    \toprule
+        & \multicolumn{10}{c}{ラベル}                                                                           \\
+        & 0                          & 1     & 2     & 3     & 4     & 5     & 6     & 7     & 8     & 9     \\
+    \midrule
+    再現率 & 0.993                      & 0.962 & 0.988 & 0.965 & 0.972 & 0.975 & 0.976 & 0.980 & 0.935 & 0.958 \\
+    適合率 & 0.993                      & 0.941 & 0.994 & 0.982 & 0.988 & 0.970 & 0.982 & 0.981 & 0.916 & 0.957 \\
+    F値  & 0.993                      & 0.951 & 0.991 & 0.973 & 0.980 & 0.973 & 0.979 & 0.981 & 0.925 & 0.957 \\
+    正解率 & \multicolumn{10}{c}{0.971}                                                                         \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\subsection*{課題3}
+$k = 16$として\tablename\ref{table:1_parameter_dataset}に示すデータセットを用いて$k$近傍法で得られる決定境界を\figurename\ref{fig:3_decision_boundary}に示す．\figurename\ref{fig:1_decision_boundary}のパーセプトロンで得られたものと類似しているが，$k$近傍法のほうが凹凸が激しくノイズに適合していることがわかる．
+
+\begin{figure}[htbp]
+  \centering
+  \begin{minipage}[b]{0.25\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{img/3_decision_boundary_classification.png}
+    \subcaption{make\_classificationの場合}
+    \label{fig:3_decision_boundary_classification}
+  \end{minipage}
+  \begin{minipage}[b]{0.25\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{img/3_decision_boundary_circles.png}
+    \subcaption{make\_circlesの場合}
+    \label{fig:3_decision_boundary_circles}
+  \end{minipage}
+  \begin{minipage}[b]{0.25\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{img/3_decision_boundary_moons.png}
+    \subcaption{make\_moonsの場合}
+    \label{fig:3_decision_boundary_moons}
+  \end{minipage}
+  \caption{$k$近傍法で得られる決定境界}
+  \label{fig:3_decision_boundary}
+\end{figure}
+
+次に，\tablename\ref{table:3_parameter_dataset}に示すパラメータおよびデータセットを用いて，交差検証法により$k$の値に対する正解率の変化を調べた結果を\figurename\ref{fig:3_k_accuracy}に示す．多少のぶれがみられるものの，$k$が増加するにつれて正解率が低下しており，$k = 1$の場合に最大となった．したがって，今回のデータセットに対しては$k = 1$が最適な値であるといえる．
+
+\begin{figure}[htbp]
+  \centering
+  \begin{minipage}[c]{0.5\linewidth}
+    \centering
+    \tabcap \caption{評価に用いたパラメータおよびデータセット}
+    \label{table:3_parameter_dataset}
+    \begin{tabular}{cc}
+      \toprule
+      $k$                     & 1～32                            \\
+      \midrule
+      \multirow{2}{*}{データセット} & sklearn.datasets.digit\_dataset \\
+                              & （学習データ50\%，テストデータ50\%）          \\
+      分割数                     & 100                             \\
+      \bottomrule
+    \end{tabular}
+  \end{minipage}
+  \hspace{0.05\linewidth}
+  \begin{minipage}[c]{0.35\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{img/3_k_train_accuracy.png}
+    \figcap \caption{$k$の値に対する正解率の変化}
+    \label{fig:3_k_accuracy}
+  \end{minipage}
+\end{figure}
+
+最後に，テストデータに対する正解率の変化を\figurename\ref{fig:3_k_test_accuracy}に示す．学習データと同様に，$k = 1$の場合に0.984と最も高くなった．
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.35\linewidth]{img/3_k_test_accuracy.png}
+  \caption{テストデータに対する正解率の変化}
+  \label{fig:3_k_test_accuracy}
+\end{figure}
+
+\subsection*{実装について}
+
+ソースコードはPythonで記述し，数値計算にNumPy，データセットの用意にscikit-learn，グラフ描画にmatplotlibを用いた．プログラムの詳細ならびに実行方法は同梱したREADME.mdを参照されたい．
 
 \end{document}
